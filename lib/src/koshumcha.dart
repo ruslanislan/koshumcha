@@ -18,6 +18,7 @@ class KoshumchaScreen extends StatefulWidget {
     required this.baseUrlWithoutHttp,
     required this.child,
     this.saveUrls = true,
+    this.params,
   });
 
   final SharedPreferences preferences;
@@ -26,6 +27,7 @@ class KoshumchaScreen extends StatefulWidget {
   final String baseUrlWithoutHttp;
   final Widget child;
   final bool saveUrls;
+  final Map<String, dynamic>? params;
 
   @override
   State<KoshumchaScreen> createState() => _KoshumchaScreenState();
@@ -48,6 +50,7 @@ class _KoshumchaScreenState extends State<KoshumchaScreen> {
       final androidInfo = await DeviceInfoPlugin().androidInfo;
       response = await Dio().get(
         url,
+        queryParameters: widget.params,
         options: Options(
           headers: {
             'User-Agent': 'Android ${androidInfo.version.sdkInt}'
@@ -62,6 +65,7 @@ class _KoshumchaScreenState extends State<KoshumchaScreen> {
       }
       response = await Dio().get(
         url,
+        queryParameters: widget.params,
         options: Options(
           headers: {
             'User-Agent':
